@@ -29,38 +29,65 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComConnect));
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.TextSend = new System.Windows.Forms.TextBox();
+            this.ConsoleBox = new System.Windows.Forms.RichTextBox();
+            this.ButtonSend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // TextSend
             // 
-            this.textBox1.AllowDrop = true;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox1.Location = new System.Drawing.Point(0, 241);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(484, 20);
-            this.textBox1.TabIndex = 0;
+            this.TextSend.AllowDrop = true;
+            this.TextSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextSend.BackColor = System.Drawing.Color.Black;
+            this.TextSend.ForeColor = System.Drawing.Color.Cyan;
+            this.TextSend.Location = new System.Drawing.Point(0, 189);
+            this.TextSend.Margin = new System.Windows.Forms.Padding(4);
+            this.TextSend.Name = "TextSend";
+            this.TextSend.Size = new System.Drawing.Size(323, 21);
+            this.TextSend.TabIndex = 0;
+            this.TextSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextSend_KeyDown);
+            this.TextSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextSend_KeyPress);
             // 
-            // richTextBox1
+            // ConsoleBox
             // 
-            this.richTextBox1.BackColor = System.Drawing.Color.Black;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox1.ForeColor = System.Drawing.Color.Cyan;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 46);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(484, 195);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.ConsoleBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ConsoleBox.BackColor = System.Drawing.Color.Black;
+            this.ConsoleBox.DetectUrls = false;
+            this.ConsoleBox.ForeColor = System.Drawing.Color.Cyan;
+            this.ConsoleBox.Location = new System.Drawing.Point(0, 28);
+            this.ConsoleBox.Margin = new System.Windows.Forms.Padding(4);
+            this.ConsoleBox.Name = "ConsoleBox";
+            this.ConsoleBox.ReadOnly = true;
+            this.ConsoleBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+            this.ConsoleBox.Size = new System.Drawing.Size(386, 162);
+            this.ConsoleBox.TabIndex = 1;
+            this.ConsoleBox.Text = "";
+            // 
+            // ButtonSend
+            // 
+            this.ButtonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonSend.Location = new System.Drawing.Point(320, 189);
+            this.ButtonSend.Name = "ButtonSend";
+            this.ButtonSend.Size = new System.Drawing.Size(65, 23);
+            this.ButtonSend.TabIndex = 2;
+            this.ButtonSend.Text = "Send";
+            this.ButtonSend.UseVisualStyleBackColor = true;
             // 
             // ComConnect
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 261);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(384, 211);
+            this.Controls.Add(this.ButtonSend);
+            this.Controls.Add(this.ConsoleBox);
+            this.Controls.Add(this.TextSend);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(200, 200);
             this.Name = "ComConnect";
             this.Text = "ComConnect";
             this.Load += new System.EventHandler(this.ComConnect_Load);
@@ -71,7 +98,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox TextSend;
+        private System.Windows.Forms.RichTextBox ConsoleBox;
+        private System.Windows.Forms.Button ButtonSend;
     }
 }

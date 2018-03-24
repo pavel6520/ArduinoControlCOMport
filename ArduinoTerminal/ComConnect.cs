@@ -25,5 +25,21 @@ namespace ArduinoTerminal
                 this.Close();
             }
         }
+
+        private void TextSend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Program.ComPort.WriteCOMport(TextSend.Text, true);
+                ConsoleBox.AppendText(TextSend.Text + "\n");
+                TextSend.Text = "";
+                
+            }
+        }
+
+        private void TextSend_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = e.KeyChar == (char)Keys.Enter;
+        }
     }
 }
