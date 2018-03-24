@@ -13,8 +13,8 @@ namespace TerminalCOMCs
         private static int COMDataBits = 8;
         private static StopBits COMStopBits = StopBits.One;
         private static Handshake COMHandshake = Handshake.None;
-        public static int COMReadTimeout = 50;
-        public static int COMWriteTimeout = 50;
+        public static int COMReadTimeout = 10;
+        public static int COMWriteTimeout = 10;
         
         //Not used in WindowsForms
         public int PortsNamesUpdate()

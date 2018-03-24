@@ -22,6 +22,14 @@ namespace ArduinoTerminal
                 BoxComNames.Items.Insert(i, Program.ComPort.GetPortsName(i));
             }
             BoxComNames.SelectedIndex = 0;
+            if (count == 0)
+            {
+                ComStartConnect.Enabled = false;
+            }
+            else
+            {
+                ComStartConnect.Enabled = true;
+            }
             return 0;
         }
 
@@ -36,23 +44,22 @@ namespace ArduinoTerminal
         private void ArduinoControl_Load(object sender, EventArgs e)
         {
             ComNamesUpdate();
-            for (int i = 1; i < 10; i++)
+            for (int i = 0; i < 9; i++)
             {
-                BoxBaudRate.Items.Insert(i - 1, Program.ComPort.GetBaud(i));
+                BoxBaudRate.Items.Insert(i, Program.ComPort.GetBaud(i + 1));
             }
             BoxBaudRate.SelectedIndex = 3;
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void ButtonStartConnect_Click(object sender, EventArgs e)
         {
             ComConnect ConnectForm = new ComConnect();
-            this.BackColor = Color.DimGray;
-            this.Enabled = false;
+            this.Visible = false;
             ConnectForm.FormClosed += (obj, arg) =>
             {
-                this.BackColor = Color.WhiteSmoke;
-                this.Enabled = true;
+                this.Visible = true;
             };
+            
             ConnectForm.Show();
         }
 
@@ -70,7 +77,6 @@ namespace ArduinoTerminal
         private void BoxBaudRate_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.ComPort.SetPortBaud(Program.ComPort.GetBaud(BoxBaudRate.SelectedIndex + 1));
-            MessageBox.Show(Convert.ToString(Program.ComPort.GetBaud(BoxBaudRate.SelectedIndex + 1)));
         }
     }
 }
