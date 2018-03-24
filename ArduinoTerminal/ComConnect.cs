@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace ArduinoTerminal
 {
-    public partial class Form1 : Form
+    public partial class ComConnect : Form
     {
-        public Form1()
+        public ComConnect()
         {
             InitializeComponent();
         }
