@@ -188,7 +188,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(513, 274);
+            this.ClientSize = new System.Drawing.Size(569, 326);
             this.Controls.Add(this.TypeRead);
             this.Controls.Add(this.TypeSend);
             this.Controls.Add(this.BoxBaudRate);

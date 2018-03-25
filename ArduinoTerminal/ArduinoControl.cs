@@ -66,7 +66,7 @@ namespace ArduinoTerminal
                 if (ThreadStart)
                 {
                     ThreadStart = false;
-                    Thread.Sleep(200);
+                    while (ReadComPort.ThreadState != ThreadState.Stopped) ;
                     Program.ComPort.CloseCOMport();
                 }
                 this.Visible = true;
