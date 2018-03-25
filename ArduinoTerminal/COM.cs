@@ -412,5 +412,21 @@ namespace TerminalCOMCs
                 return false;
             }
         }
+
+        public bool CloseCOMport()
+        {
+            //Opens the connection
+            try
+            {
+                COMport.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error OpenPort");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace ArduinoTerminal
 {
     public partial class ArduinoControl : Form
     {
-        int count;
+        public ComConnect ConnectForm;
+        public Thread ReadComPort;
+        private int count;
+        public bool SendTypeString = true;
+        public bool SendTypeLine = true;
+        public bool ReadTypeChar = true;
+        public bool ThreadStart = false;
 
         public int ComNamesUpdate()
         {
@@ -21,13 +27,13 @@ namespace ArduinoTerminal
             {
                 BoxComNames.Items.Insert(i, Program.ComPort.GetPortsName(i));
             }
-            BoxComNames.SelectedIndex = 0;
             if (count == 0)
             {
                 ComStartConnect.Enabled = false;
             }
             else
             {
+                BoxComNames.SelectedIndex = 0;
                 ComStartConnect.Enabled = true;
             }
             return 0;
@@ -53,10 +59,16 @@ namespace ArduinoTerminal
 
         private void ButtonStartConnect_Click(object sender, EventArgs e)
         {
-            ComConnect ConnectForm = new ComConnect();
+            ConnectForm = new ComConnect();
             this.Visible = false;
             ConnectForm.FormClosed += (obj, arg) =>
             {
+                if (ThreadStart)
+                {
+                    ThreadStart = false;
+                    Thread.Sleep(200);
+                    Program.ComPort.CloseCOMport();
+                }
                 this.Visible = true;
             };
             
@@ -77,6 +89,29 @@ namespace ArduinoTerminal
         private void BoxBaudRate_SelectedIndexChanged(object sender, EventArgs e)
         {
             Program.ComPort.SetPortBaud(Program.ComPort.GetBaud(BoxBaudRate.SelectedIndex + 1));
+        }
+
+        private void TypeSendString_CheckedChanged(object sender, EventArgs e)
+        {
+            SendTypeString = TypeSendString.Checked;
+            if (SendTypeString)
+            {
+                TypeSendNewLine.Enabled = true;
+            }
+            else
+            {
+                TypeSendNewLine.Enabled = false;
+            }
+        }
+
+        private void TypeSendNewLine_CheckedChanged(object sender, EventArgs e)
+        {
+            SendTypeLine = !TypeSendNewLine.Checked;
+        }
+
+        private void TypeReadChar_CheckedChanged(object sender, EventArgs e)
+        {
+            ReadTypeChar = TypeReadChar.Checked;
         }
     }
 }

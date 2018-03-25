@@ -37,11 +37,12 @@
             this.BoxBaudRate = new System.Windows.Forms.ComboBox();
             this.toolTripComPortName = new System.Windows.Forms.ToolTip(this.components);
             this.TypeSend = new System.Windows.Forms.GroupBox();
-            this.TypeRead = new System.Windows.Forms.GroupBox();
+            this.TypeSendNewLine = new System.Windows.Forms.CheckBox();
+            this.TypeSendInt = new System.Windows.Forms.RadioButton();
             this.TypeSendString = new System.Windows.Forms.RadioButton();
-            this.SendTypeInt = new System.Windows.Forms.RadioButton();
-            this.TypeReadString = new System.Windows.Forms.RadioButton();
+            this.TypeRead = new System.Windows.Forms.GroupBox();
             this.TypeReadInt = new System.Windows.Forms.RadioButton();
+            this.TypeReadChar = new System.Windows.Forms.RadioButton();
             this.TypeSend.SuspendLayout();
             this.TypeRead.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +50,7 @@
             // ComStartConnect
             // 
             this.ComStartConnect.Location = new System.Drawing.Point(11, 239);
-            this.ComStartConnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ComStartConnect.Margin = new System.Windows.Forms.Padding(2);
             this.ComStartConnect.Name = "ComStartConnect";
             this.ComStartConnect.Size = new System.Drawing.Size(102, 24);
             this.ComStartConnect.TabIndex = 0;
@@ -63,7 +64,7 @@
             this.BoxComNames.FormattingEnabled = true;
             this.BoxComNames.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.BoxComNames.Location = new System.Drawing.Point(73, 5);
-            this.BoxComNames.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BoxComNames.Margin = new System.Windows.Forms.Padding(2);
             this.BoxComNames.Name = "BoxComNames";
             this.BoxComNames.Size = new System.Drawing.Size(120, 21);
             this.BoxComNames.TabIndex = 1;
@@ -94,7 +95,7 @@
             this.BoxBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.BoxBaudRate.FormattingEnabled = true;
             this.BoxBaudRate.Location = new System.Drawing.Point(73, 32);
-            this.BoxBaudRate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BoxBaudRate.Margin = new System.Windows.Forms.Padding(2);
             this.BoxBaudRate.Name = "BoxBaudRate";
             this.BoxBaudRate.Size = new System.Drawing.Size(120, 21);
             this.BoxBaudRate.TabIndex = 4;
@@ -102,25 +103,38 @@
             // 
             // TypeSend
             // 
-            this.TypeSend.Controls.Add(this.SendTypeInt);
+            this.TypeSend.Controls.Add(this.TypeSendNewLine);
+            this.TypeSend.Controls.Add(this.TypeSendInt);
             this.TypeSend.Controls.Add(this.TypeSendString);
             this.TypeSend.Location = new System.Drawing.Point(5, 58);
             this.TypeSend.Name = "TypeSend";
-            this.TypeSend.Size = new System.Drawing.Size(95, 69);
+            this.TypeSend.Size = new System.Drawing.Size(95, 94);
             this.TypeSend.TabIndex = 5;
             this.TypeSend.TabStop = false;
             this.TypeSend.Text = "Send Type";
             // 
-            // TypeRead
+            // TypeSendNewLine
             // 
-            this.TypeRead.Controls.Add(this.TypeReadInt);
-            this.TypeRead.Controls.Add(this.TypeReadString);
-            this.TypeRead.Location = new System.Drawing.Point(106, 58);
-            this.TypeRead.Name = "TypeRead";
-            this.TypeRead.Size = new System.Drawing.Size(94, 69);
-            this.TypeRead.TabIndex = 6;
-            this.TypeRead.TabStop = false;
-            this.TypeRead.Text = "Type Read";
+            this.TypeSendNewLine.AutoSize = true;
+            this.TypeSendNewLine.Checked = true;
+            this.TypeSendNewLine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TypeSendNewLine.Location = new System.Drawing.Point(8, 68);
+            this.TypeSendNewLine.Name = "TypeSendNewLine";
+            this.TypeSendNewLine.Size = new System.Drawing.Size(68, 17);
+            this.TypeSendNewLine.TabIndex = 2;
+            this.TypeSendNewLine.Text = "NewLine";
+            this.TypeSendNewLine.UseVisualStyleBackColor = true;
+            this.TypeSendNewLine.CheckedChanged += new System.EventHandler(this.TypeSendNewLine_CheckedChanged);
+            // 
+            // TypeSendInt
+            // 
+            this.TypeSendInt.AutoSize = true;
+            this.TypeSendInt.Location = new System.Drawing.Point(8, 44);
+            this.TypeSendInt.Name = "TypeSendInt";
+            this.TypeSendInt.Size = new System.Drawing.Size(79, 17);
+            this.TypeSendInt.TabIndex = 1;
+            this.TypeSendInt.Text = "Int (0 - 127)";
+            this.TypeSendInt.UseVisualStyleBackColor = true;
             // 
             // TypeSendString
             // 
@@ -133,28 +147,18 @@
             this.TypeSendString.TabStop = true;
             this.TypeSendString.Text = "String";
             this.TypeSendString.UseVisualStyleBackColor = true;
+            this.TypeSendString.CheckedChanged += new System.EventHandler(this.TypeSendString_CheckedChanged);
             // 
-            // SendTypeInt
+            // TypeRead
             // 
-            this.SendTypeInt.AutoSize = true;
-            this.SendTypeInt.Location = new System.Drawing.Point(8, 44);
-            this.SendTypeInt.Name = "SendTypeInt";
-            this.SendTypeInt.Size = new System.Drawing.Size(79, 17);
-            this.SendTypeInt.TabIndex = 1;
-            this.SendTypeInt.Text = "Int (0 - 127)";
-            this.SendTypeInt.UseVisualStyleBackColor = true;
-            // 
-            // TypeReadString
-            // 
-            this.TypeReadString.AutoSize = true;
-            this.TypeReadString.Checked = true;
-            this.TypeReadString.Location = new System.Drawing.Point(6, 19);
-            this.TypeReadString.Name = "TypeReadString";
-            this.TypeReadString.Size = new System.Drawing.Size(52, 17);
-            this.TypeReadString.TabIndex = 1;
-            this.TypeReadString.TabStop = true;
-            this.TypeReadString.Text = "String";
-            this.TypeReadString.UseVisualStyleBackColor = true;
+            this.TypeRead.Controls.Add(this.TypeReadInt);
+            this.TypeRead.Controls.Add(this.TypeReadChar);
+            this.TypeRead.Location = new System.Drawing.Point(106, 58);
+            this.TypeRead.Name = "TypeRead";
+            this.TypeRead.Size = new System.Drawing.Size(94, 94);
+            this.TypeRead.TabIndex = 6;
+            this.TypeRead.TabStop = false;
+            this.TypeRead.Text = "Read Type";
             // 
             // TypeReadInt
             // 
@@ -165,6 +169,19 @@
             this.TypeReadInt.TabIndex = 2;
             this.TypeReadInt.Text = "Int (0 - 127)";
             this.TypeReadInt.UseVisualStyleBackColor = true;
+            // 
+            // TypeReadChar
+            // 
+            this.TypeReadChar.AutoSize = true;
+            this.TypeReadChar.Checked = true;
+            this.TypeReadChar.Location = new System.Drawing.Point(6, 19);
+            this.TypeReadChar.Name = "TypeReadChar";
+            this.TypeReadChar.Size = new System.Drawing.Size(47, 17);
+            this.TypeReadChar.TabIndex = 1;
+            this.TypeReadChar.TabStop = true;
+            this.TypeReadChar.Text = "Char";
+            this.TypeReadChar.UseVisualStyleBackColor = true;
+            this.TypeReadChar.CheckedChanged += new System.EventHandler(this.TypeReadChar_CheckedChanged);
             // 
             // ArduinoControl
             // 
@@ -180,7 +197,7 @@
             this.Controls.Add(this.BoxComNames);
             this.Controls.Add(this.ComStartConnect);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "ArduinoControl";
             this.Text = "ArduinoControl";
@@ -204,10 +221,11 @@
         private System.Windows.Forms.ToolTip toolTripComPortName;
         private System.Windows.Forms.GroupBox TypeSend;
         private System.Windows.Forms.GroupBox TypeRead;
-        private System.Windows.Forms.RadioButton SendTypeInt;
+        private System.Windows.Forms.RadioButton TypeSendInt;
         private System.Windows.Forms.RadioButton TypeSendString;
         private System.Windows.Forms.RadioButton TypeReadInt;
-        private System.Windows.Forms.RadioButton TypeReadString;
+        private System.Windows.Forms.RadioButton TypeReadChar;
+        private System.Windows.Forms.CheckBox TypeSendNewLine;
     }
 }
 
