@@ -49,7 +49,7 @@
             // 
             // ComStartConnect
             // 
-            this.ComStartConnect.Location = new System.Drawing.Point(11, 239);
+            this.ComStartConnect.Location = new System.Drawing.Point(11, 238);
             this.ComStartConnect.Margin = new System.Windows.Forms.Padding(2);
             this.ComStartConnect.Name = "ComStartConnect";
             this.ComStartConnect.Size = new System.Drawing.Size(102, 24);
@@ -188,7 +188,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(569, 326);
+            this.ClientSize = new System.Drawing.Size(520, 273);
             this.Controls.Add(this.TypeRead);
             this.Controls.Add(this.TypeSend);
             this.Controls.Add(this.BoxBaudRate);

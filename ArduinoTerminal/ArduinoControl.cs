@@ -59,20 +59,28 @@ namespace ArduinoTerminal
 
         private void ButtonStartConnect_Click(object sender, EventArgs e)
         {
-            ConnectForm = new ComConnect();
-            this.Visible = false;
-            ConnectForm.FormClosed += (obj, arg) =>
+            Program.ComPort.SetConfCOMport();
+            if (!Program.ComPort.OpenCOMport())
             {
-                if (ThreadStart)
+                MessageBox.Show("Error open port " + Program.ComPort.GetCOMportName() + "\nReturn to Settings...");
+            }
+            else
+            {
+                ConnectForm = new ComConnect();
+                this.Visible = false;
+                ConnectForm.FormClosed += (obj, arg) =>
                 {
-                    ThreadStart = false;
-                    while (ReadComPort.ThreadState != ThreadState.Stopped) ;
-                    Program.ComPort.CloseCOMport();
-                }
-                this.Visible = true;
-            };
-            
-            ConnectForm.Show();
+                    if (ThreadStart)
+                    {
+                        ThreadStart = false;
+                        while (ReadComPort.ThreadState != ThreadState.Stopped) ;
+                        Program.ComPort.CloseCOMport();
+                    }
+                    this.Visible = true;
+                };
+
+                ConnectForm.Show();
+            }
         }
 
         private void BoxComNames_SelectedIndexChanged(object sender, EventArgs e)

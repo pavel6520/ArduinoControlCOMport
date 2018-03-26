@@ -46,7 +46,6 @@
             this.TextSend.Name = "TextSend";
             this.TextSend.Size = new System.Drawing.Size(323, 21);
             this.TextSend.TabIndex = 0;
-            this.TextSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextSend_KeyDown);
             this.TextSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextSend_KeyPress);
             // 
             // ConsoleBox
