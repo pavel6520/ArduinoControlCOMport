@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
 namespace ArduinoTerminal
 {
-    public partial class ComConnect : Form
+    public partial class ComConnectForm : Form
     {
         public delegate void ConsoleBoxAddText(int Key);
-        public delegate void SendCaptureCommand(int IntSend);
+        //public delegate void SendCaptureCommand(int IntSend);
         //public delegate void (int c);
-        public ConsoleBoxAddText CBATdelegate;
+        public ConsoleBoxAddText CBATdelegate; //delegate for add text in ConsoleBox
+       // public SendCaptureCommand SCCdelegate; //delegate for send command
 
         /// <summary>
         /// Param: Int 0 - 127
@@ -78,14 +75,6 @@ namespace ArduinoTerminal
                     if (ReadInt >= 0)
                     {
                         Invoke(CBATdelegate, ReadInt);
-                        /*if (Program.MainForm.ReadTypeChar)
-                        {
-                            ConsoleBox.AppendText(Convert.ToChar(ReadInt) + "");
-                        }
-                        else
-                        {
-                            ConsoleBox.AppendText(ReadInt + "\n");
-                        }*/
                     }
                     else if (ReadInt == -2)
                     {
@@ -115,18 +104,18 @@ namespace ArduinoTerminal
             ConsoleBox.ScrollToCaret();
         }
 
-        public ComConnect()
+        public ComConnectForm()
         {
             InitializeComponent();
         }
 
         private void ComConnect_Load(object sender, EventArgs e)
         {
+            this.Location = new Point(Convert.ToInt32(Program.FileSettings.ReadINI("AppLocation", "X")), Convert.ToInt32(Program.FileSettings.ReadINI("AppLocation", "Y")));
             Program.MainForm.ReadComPort = new Thread(Read);
             Program.MainForm.ReadComPort.Start();
             Program.MainForm.ThreadStart = true;
             CBATdelegate = new ConsoleBoxAddText(ConsoleBox_AddText);
-            //action = c => ConsoleBox_AddText(c);
         }
 
         private void TextSend_KeyPress(object sender, KeyPressEventArgs e)

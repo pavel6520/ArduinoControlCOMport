@@ -1,6 +1,6 @@
 ﻿namespace ArduinoTerminal
 {
-    partial class ComConnect
+    partial class ComConnectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComConnect));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComConnectForm));
             this.TextSend = new System.Windows.Forms.TextBox();
             this.ConsoleBox = new System.Windows.Forms.RichTextBox();
             this.ButtonSend = new System.Windows.Forms.Button();
@@ -76,7 +76,7 @@
             this.ButtonSend.UseVisualStyleBackColor = true;
             this.ButtonSend.Click += new System.EventHandler(this.ButtonSend_Click);
             // 
-            // ComConnect
+            // ComConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -88,7 +88,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(200, 200);
-            this.Name = "ComConnect";
+            this.Name = "ComConnectForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ComConnect";
             this.Load += new System.EventHandler(this.ComConnect_Load);
             this.ResumeLayout(false);

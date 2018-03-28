@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
 namespace ArduinoTerminal
 {
-    public partial class ArduinoControl : Form
+    public partial class MainMenuForm : Form
     {
-        public ComConnect ConnectForm;
+        public ComConnectForm ConnectForm;
         public Thread ReadComPort;
         private int count;
         public bool SendTypeString = true;
@@ -39,7 +35,36 @@ namespace ArduinoTerminal
             return 0;
         }
 
-        public ArduinoControl()
+        public static void SaveLocation(Form form)
+        {
+            int x = form.Location.X, y = form.Location.Y;
+            while (x < 0 || x > Screen.PrimaryScreen.Bounds.Size.Width)
+            {
+                if (x < 0)
+                {
+                    x += Screen.PrimaryScreen.Bounds.Size.Width;
+                }
+                else
+                {
+                    x -= Screen.PrimaryScreen.Bounds.Size.Width;
+                }
+            }
+            while (y < 0 || y > Screen.PrimaryScreen.Bounds.Size.Height)
+            {
+                if (y < 0)
+                {
+                    y += Screen.PrimaryScreen.Bounds.Size.Height;
+                }
+                else
+                {
+                    y -= Screen.PrimaryScreen.Bounds.Size.Height;
+                }
+            }
+            Program.FileSettings.WriteINI("AppLocation", "X", "" + x);
+            Program.FileSettings.WriteINI("AppLocation", "Y", "" + y);
+        }
+
+        public MainMenuForm()
         {
             InitializeComponent();
             BoxComNames.SelectedIndexChanged += BoxComNames_SelectedIndexChanged;
@@ -50,6 +75,14 @@ namespace ArduinoTerminal
         private void ArduinoControl_Load(object sender, EventArgs e)
         {
             ComNamesUpdate();
+            if (Program.FileSettings.KeyExists("AppLocation", "X") && Program.FileSettings.KeyExists("AppLocation", "Y"))
+            {
+                this.Location = new Point(Convert.ToInt32(Program.FileSettings.ReadINI("AppLocation", "X")), Convert.ToInt32(Program.FileSettings.ReadINI("AppLocation", "Y")));
+            }
+            else
+            {
+                SaveLocation(this);
+            }
             for (int i = 0; i < 9; i++)
             {
                 BoxBaudRate.Items.Insert(i, Program.ComPort.GetBaud(i + 1));
@@ -66,7 +99,9 @@ namespace ArduinoTerminal
             }
             else
             {
-                ConnectForm = new ComConnect();
+                ConnectForm = new ComConnectForm();
+                Program.FileSettings.WriteINI("AppLocation", "X", "" + this.Location.X);
+                Program.FileSettings.WriteINI("AppLocation", "Y", "" + this.Location.Y);
                 this.Visible = false;
                 ConnectForm.FormClosed += (obj, arg) =>
                 {
@@ -120,6 +155,11 @@ namespace ArduinoTerminal
         private void TypeReadChar_CheckedChanged(object sender, EventArgs e)
         {
             ReadTypeChar = TypeReadChar.Checked;
+        }
+
+        private void MainMenuForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveLocation(this);
         }
     }
 }

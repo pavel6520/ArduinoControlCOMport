@@ -1,6 +1,6 @@
 ﻿namespace ArduinoTerminal
 {
-    partial class ArduinoControl
+    partial class MainMenuForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArduinoControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
             this.ComStartConnect = new System.Windows.Forms.Button();
             this.BoxComNames = new System.Windows.Forms.ComboBox();
             this.LabelComPort = new System.Windows.Forms.Label();
@@ -49,7 +49,7 @@
             // 
             // ComStartConnect
             // 
-            this.ComStartConnect.Location = new System.Drawing.Point(11, 238);
+            this.ComStartConnect.Location = new System.Drawing.Point(13, 198);
             this.ComStartConnect.Margin = new System.Windows.Forms.Padding(2);
             this.ComStartConnect.Name = "ComStartConnect";
             this.ComStartConnect.Size = new System.Drawing.Size(102, 24);
@@ -106,7 +106,7 @@
             this.TypeSend.Controls.Add(this.TypeSendNewLine);
             this.TypeSend.Controls.Add(this.TypeSendInt);
             this.TypeSend.Controls.Add(this.TypeSendString);
-            this.TypeSend.Location = new System.Drawing.Point(5, 58);
+            this.TypeSend.Location = new System.Drawing.Point(198, 8);
             this.TypeSend.Name = "TypeSend";
             this.TypeSend.Size = new System.Drawing.Size(95, 94);
             this.TypeSend.TabIndex = 5;
@@ -153,7 +153,7 @@
             // 
             this.TypeRead.Controls.Add(this.TypeReadInt);
             this.TypeRead.Controls.Add(this.TypeReadChar);
-            this.TypeRead.Location = new System.Drawing.Point(106, 58);
+            this.TypeRead.Location = new System.Drawing.Point(299, 8);
             this.TypeRead.Name = "TypeRead";
             this.TypeRead.Size = new System.Drawing.Size(94, 94);
             this.TypeRead.TabIndex = 6;
@@ -183,12 +183,12 @@
             this.TypeReadChar.UseVisualStyleBackColor = true;
             this.TypeReadChar.CheckedChanged += new System.EventHandler(this.TypeReadChar_CheckedChanged);
             // 
-            // ArduinoControl
+            // MainMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(520, 273);
+            this.ClientSize = new System.Drawing.Size(404, 241);
             this.Controls.Add(this.TypeRead);
             this.Controls.Add(this.TypeSend);
             this.Controls.Add(this.BoxBaudRate);
@@ -199,8 +199,10 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
-            this.Name = "ArduinoControl";
+            this.Name = "MainMenuForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ArduinoControl";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMenuForm_FormClosing);
             this.Load += new System.EventHandler(this.ArduinoControl_Load);
             this.TypeSend.ResumeLayout(false);
             this.TypeSend.PerformLayout();
