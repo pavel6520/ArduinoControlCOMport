@@ -9,21 +9,23 @@ namespace ArduinoTerminal
     {
         public ComConnectForm ConnectForm;
         public Thread ReadComPort;
-        private int count;
+        private int PortCount;
         public bool SendTypeString = true;
         public bool SendTypeLine = true;
         public bool ReadTypeChar = true;
         public bool ThreadStart = false;
+        public bool CaptureMode = false;
+        
 
         public int ComNamesUpdate()
         {
             BoxComNames.Items.Clear();
-            count = Program.ComPort.PortsNamesUpdate();
-            for (int i = 0; i < count; i++)
+            PortCount = Program.ComPort.PortsNamesUpdate();
+            for (int i = 0; i < PortCount; i++)
             {
                 BoxComNames.Items.Insert(i, Program.ComPort.GetPortsName(i));
             }
-            if (count == 0)
+            if (PortCount == 0)
             {
                 ComStartConnect.Enabled = false;
             }
@@ -100,13 +102,12 @@ namespace ArduinoTerminal
             else
             {
                 ConnectForm = new ComConnectForm();
-                Program.FileSettings.WriteINI("AppLocation", "X", "" + this.Location.X);
-                Program.FileSettings.WriteINI("AppLocation", "Y", "" + this.Location.Y);
                 this.Visible = false;
                 ConnectForm.FormClosed += (obj, arg) =>
                 {
                     if (ThreadStart)
                     {
+                        this.Location = ConnectForm.Location;
                         ThreadStart = false;
                         while (ReadComPort.ThreadState != ThreadState.Stopped) ;
                         Program.ComPort.CloseCOMport();
@@ -137,14 +138,7 @@ namespace ArduinoTerminal
         private void TypeSendString_CheckedChanged(object sender, EventArgs e)
         {
             SendTypeString = TypeSendString.Checked;
-            if (SendTypeString)
-            {
-                TypeSendNewLine.Enabled = true;
-            }
-            else
-            {
-                TypeSendNewLine.Enabled = false;
-            }
+            TypeSendNewLine.Enabled = TypeSendString.Checked;
         }
 
         private void TypeSendNewLine_CheckedChanged(object sender, EventArgs e)
@@ -160,6 +154,11 @@ namespace ArduinoTerminal
         private void MainMenuForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveLocation(this);
+        }
+
+        private void CaptureModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CaptureMode = CaptureModeCheckBox.Checked;
         }
     }
 }

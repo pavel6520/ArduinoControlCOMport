@@ -35,7 +35,8 @@
             this.LabelComPort = new System.Windows.Forms.Label();
             this.LabelBaudRate = new System.Windows.Forms.Label();
             this.BoxBaudRate = new System.Windows.Forms.ComboBox();
-            this.toolTripComPortName = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTrip = new System.Windows.Forms.ToolTip(this.components);
+            this.CaptureModeCheckBox = new System.Windows.Forms.CheckBox();
             this.TypeSend = new System.Windows.Forms.GroupBox();
             this.TypeSendNewLine = new System.Windows.Forms.CheckBox();
             this.TypeSendInt = new System.Windows.Forms.RadioButton();
@@ -49,10 +50,10 @@
             // 
             // ComStartConnect
             // 
-            this.ComStartConnect.Location = new System.Drawing.Point(13, 198);
+            this.ComStartConnect.Location = new System.Drawing.Point(11, 80);
             this.ComStartConnect.Margin = new System.Windows.Forms.Padding(2);
             this.ComStartConnect.Name = "ComStartConnect";
-            this.ComStartConnect.Size = new System.Drawing.Size(102, 24);
+            this.ComStartConnect.Size = new System.Drawing.Size(89, 24);
             this.ComStartConnect.TabIndex = 0;
             this.ComStartConnect.Text = "Connect";
             this.ComStartConnect.UseVisualStyleBackColor = true;
@@ -68,7 +69,7 @@
             this.BoxComNames.Name = "BoxComNames";
             this.BoxComNames.Size = new System.Drawing.Size(120, 21);
             this.BoxComNames.TabIndex = 1;
-            this.toolTripComPortName.SetToolTip(this.BoxComNames, "Active Port Names\r\nThe list is updated when opened");
+            this.toolTrip.SetToolTip(this.BoxComNames, "Active Port Names\r\nThe list is updated when opened");
             // 
             // LabelComPort
             // 
@@ -99,7 +100,25 @@
             this.BoxBaudRate.Name = "BoxBaudRate";
             this.BoxBaudRate.Size = new System.Drawing.Size(120, 21);
             this.BoxBaudRate.TabIndex = 4;
-            this.toolTripComPortName.SetToolTip(this.BoxBaudRate, "Connection speed in Baudes\r\nSelect from the list or enter your own value");
+            this.toolTrip.SetToolTip(this.BoxBaudRate, "Connection speed in Baudes\r\nSelect from the list or enter your own value");
+            // 
+            // toolTrip
+            // 
+            this.toolTrip.AutoPopDelay = 5000;
+            this.toolTrip.InitialDelay = 300;
+            this.toolTrip.ReshowDelay = 100;
+            // 
+            // CaptureModeCheckBox
+            // 
+            this.CaptureModeCheckBox.AutoSize = true;
+            this.CaptureModeCheckBox.Location = new System.Drawing.Point(12, 58);
+            this.CaptureModeCheckBox.Name = "CaptureModeCheckBox";
+            this.CaptureModeCheckBox.Size = new System.Drawing.Size(111, 17);
+            this.CaptureModeCheckBox.TabIndex = 7;
+            this.CaptureModeCheckBox.Text = "CaptureKey Mode";
+            this.toolTrip.SetToolTip(this.CaptureModeCheckBox, "For start capturing the key, activate (press) the text output box.\r\n");
+            this.CaptureModeCheckBox.UseVisualStyleBackColor = true;
+            this.CaptureModeCheckBox.CheckedChanged += new System.EventHandler(this.CaptureModeCheckBox_CheckedChanged);
             // 
             // TypeSend
             // 
@@ -112,6 +131,8 @@
             this.TypeSend.TabIndex = 5;
             this.TypeSend.TabStop = false;
             this.TypeSend.Text = "Send Type";
+            this.toolTrip.SetToolTip(this.TypeSend, "The COM port passes characters between devices.\r\nIf you translate a character int" +
+        "o a numeric representation,\r\nyou will get a number from 0 to 127.");
             // 
             // TypeSendNewLine
             // 
@@ -123,6 +144,8 @@
             this.TypeSendNewLine.Size = new System.Drawing.Size(68, 17);
             this.TypeSendNewLine.TabIndex = 2;
             this.TypeSendNewLine.Text = "NewLine";
+            this.toolTrip.SetToolTip(this.TypeSendNewLine, "Indicates whether a carriage return character is sent each time the line is sent." +
+        "");
             this.TypeSendNewLine.UseVisualStyleBackColor = true;
             this.TypeSendNewLine.CheckedChanged += new System.EventHandler(this.TypeSendNewLine_CheckedChanged);
             // 
@@ -134,6 +157,9 @@
             this.TypeSendInt.Size = new System.Drawing.Size(79, 17);
             this.TypeSendInt.TabIndex = 1;
             this.TypeSendInt.Text = "Int (0 - 127)";
+            this.toolTrip.SetToolTip(this.TypeSendInt, "The program will receive the number you entered (0 - 127) and send it to the COM " +
+        "port as a symbol.\r\nThe processing of the transmitted number is on the receiving " +
+        "device.");
             this.TypeSendInt.UseVisualStyleBackColor = true;
             // 
             // TypeSendString
@@ -146,6 +172,7 @@
             this.TypeSendString.TabIndex = 0;
             this.TypeSendString.TabStop = true;
             this.TypeSendString.Text = "String";
+            this.toolTrip.SetToolTip(this.TypeSendString, "The program receives the line you typed and sends it to the COM port.");
             this.TypeSendString.UseVisualStyleBackColor = true;
             this.TypeSendString.CheckedChanged += new System.EventHandler(this.TypeSendString_CheckedChanged);
             // 
@@ -159,6 +186,8 @@
             this.TypeRead.TabIndex = 6;
             this.TypeRead.TabStop = false;
             this.TypeRead.Text = "Read Type";
+            this.toolTrip.SetToolTip(this.TypeRead, "The COM port passes characters between devices.\r\nIf you translate a character int" +
+        "o a numeric representation,\r\nyou will get a number from 0 to 127.");
             // 
             // TypeReadInt
             // 
@@ -168,6 +197,7 @@
             this.TypeReadInt.Size = new System.Drawing.Size(79, 17);
             this.TypeReadInt.TabIndex = 2;
             this.TypeReadInt.Text = "Int (0 - 127)";
+            this.toolTrip.SetToolTip(this.TypeReadInt, "The program will receive a number (0 - 127) from the COM port and display it.");
             this.TypeReadInt.UseVisualStyleBackColor = true;
             // 
             // TypeReadChar
@@ -180,6 +210,9 @@
             this.TypeReadChar.TabIndex = 1;
             this.TypeReadChar.TabStop = true;
             this.TypeReadChar.Text = "Char";
+            this.toolTrip.SetToolTip(this.TypeReadChar, "The program reads 1 character from the COM port and displays it on the screen.\r\nT" +
+        "he transition to a new line is carried out only when the carriage return charact" +
+        "er is received.");
             this.TypeReadChar.UseVisualStyleBackColor = true;
             this.TypeReadChar.CheckedChanged += new System.EventHandler(this.TypeReadChar_CheckedChanged);
             // 
@@ -188,7 +221,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(404, 241);
+            this.ClientSize = new System.Drawing.Size(404, 110);
+            this.Controls.Add(this.CaptureModeCheckBox);
             this.Controls.Add(this.TypeRead);
             this.Controls.Add(this.TypeSend);
             this.Controls.Add(this.BoxBaudRate);
@@ -220,7 +254,7 @@
         private System.Windows.Forms.Label LabelComPort;
         private System.Windows.Forms.Label LabelBaudRate;
         private System.Windows.Forms.ComboBox BoxBaudRate;
-        private System.Windows.Forms.ToolTip toolTripComPortName;
+        private System.Windows.Forms.ToolTip toolTrip;
         private System.Windows.Forms.GroupBox TypeSend;
         private System.Windows.Forms.GroupBox TypeRead;
         private System.Windows.Forms.RadioButton TypeSendInt;
@@ -228,6 +262,7 @@
         private System.Windows.Forms.RadioButton TypeReadInt;
         private System.Windows.Forms.RadioButton TypeReadChar;
         private System.Windows.Forms.CheckBox TypeSendNewLine;
+        private System.Windows.Forms.CheckBox CaptureModeCheckBox;
     }
 }
 
