@@ -7,11 +7,13 @@ namespace ArduinoTerminal
 {
     public partial class ComConnectForm : Form
     {
+        public bool[] MasPressedKeys;
         public delegate void ConsoleBoxAddText(int Key);
-        //public delegate void SendCaptureCommand(int IntSend);
+        public delegate void SendCaptureCommand(string INTSend);
         //public delegate void (int c);
         public ConsoleBoxAddText CBATdelegate; //delegate for add text in ConsoleBox
-       // public SendCaptureCommand SCCdelegate; //delegate for send command
+        public SendCaptureCommand SCCdelegate; //delegate for send command
+        public Thread CapturedSend;
 
         /// <summary>
         /// Param: Int 0 - 127
@@ -21,11 +23,11 @@ namespace ArduinoTerminal
         {
             try
             {
-                int SendInt = Convert.ToInt32(TextSend.Text);
+                int SendInt = Convert.ToInt32(INTSend);
                 if (SendInt >= 0 && SendInt <= 127)
                 {
                     Program.ComPort.WriteCOMport(SendInt, false);
-                    ConsoleBox.AppendText(TextSend.Text + "\n");
+                    ConsoleBox.AppendText(SendInt + "\n");
                     ConsoleBox.SelectionStart = ConsoleBox.Text.Length;
                     ConsoleBox.ScrollToCaret();
                 }
@@ -42,8 +44,8 @@ namespace ArduinoTerminal
 
         private void SendString(string STRINGSend)
         {
-            Program.ComPort.WriteCOMport(TextSend.Text, Program.MainForm.SendTypeLine);
-            ConsoleBox.AppendText(TextSend.Text + "\n");
+            Program.ComPort.WriteCOMport(STRINGSend, Program.MainForm.SendTypeLine);
+            ConsoleBox.AppendText(STRINGSend + "\n");
             ConsoleBox.SelectionStart = ConsoleBox.Text.Length;
             ConsoleBox.ScrollToCaret();
         }
@@ -85,7 +87,7 @@ namespace ArduinoTerminal
             }
         }
 
-        public void ConsoleBox_AddText(int CharRead)
+        public void ConsoleBox_AddChar(int CharRead)
         {
             if (Program.MainForm.ReadTypeChar)
             {
@@ -96,40 +98,85 @@ namespace ArduinoTerminal
             {
                 ConsoleBox.AppendText(CharRead + "\n");
             }
-            ConsoleBox.Select(
-                ConsoleBox.Text.Length - 1,
-                ConsoleBox.Text.Length);
+            ConsoleBox.Select(ConsoleBox.Text.Length - 1, ConsoleBox.Text.Length);
             ConsoleBox.SelectionColor = Color.YellowGreen;
             ConsoleBox.SelectionStart = ConsoleBox.Text.Length;
             ConsoleBox.ScrollToCaret();
         }
 
+        public void CaptureKeyEvent(object eC)
+        {
+            KeyEventArgs e = (KeyEventArgs)eC;
+            if (e.KeyCode == Keys.W)
+            {
+                Invoke(SCCdelegate, 1 + "");
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                Invoke(SCCdelegate, 2 + "");
+            }
+            if (e.KeyCode == Keys.Space)
+            {
+                Invoke(SCCdelegate, 0 + "");
+            }
+            Thread.Sleep(50);
+        }
+
         public ComConnectForm()
         {
             InitializeComponent();
+            this.KeyPreview = true;
         }
 
         private void ComConnect_Load(object sender, EventArgs e)
         {
-            this.Location = new Point(Convert.ToInt32(Program.FileSettings.ReadINI("AppLocation", "X")), Convert.ToInt32(Program.FileSettings.ReadINI("AppLocation", "Y")));
+            this.Text = Program.ComPort.GetCOMportName() + " " + Program.ComPort.GetCOMportBaud();
+            this.Location = Program.MainForm.Location;
             Program.MainForm.ReadComPort = new Thread(Read);
             Program.MainForm.ReadComPort.Start();
             Program.MainForm.ThreadStart = true;
-            CBATdelegate = new ConsoleBoxAddText(ConsoleBox_AddText);
+            CBATdelegate = new ConsoleBoxAddText(ConsoleBox_AddChar);
+            if (Program.MainForm.CaptureMode)
+            {
+                SCCdelegate = new SendCaptureCommand(SendInt);
+                CapturedSend = new Thread(CaptureKeyEvent);
+                MasPressedKeys = new bool[222];
+            }
         }
 
         private void TextSend_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = e.KeyChar == (char)Keys.Enter;
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.Handled)
             {
                 Send();
             }
         }
-
-        private void ButtonSend_Click(object sender, EventArgs e)
+        
+        private void ConsoleBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Send();
+            e.Handled = true;
+        }
+
+        private void ComConnectForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (ConsoleBox.Focused)
+            {
+                if (Program.MainForm.CaptureMode)
+                {
+                    if(CapturedSend.ThreadState == ThreadState.Stopped)
+                    {
+                        CapturedSend = new Thread(CaptureKeyEvent);
+                    }
+                    if(CapturedSend.ThreadState != ThreadState.WaitSleepJoin && CapturedSend.ThreadState != ThreadState.Running)
+                    {
+                        CapturedSend.Start(e);
+                        TextSend.Text = "ALT=" + e.Alt + " CTRL=" + e.Control + " SHIFT=" + e.Shift + " key= " + e.KeyCode + "| " + e.KeyData + "| " + e.KeyValue;
+                    }
+                    
+                }
+            }
         }
     }
 }
