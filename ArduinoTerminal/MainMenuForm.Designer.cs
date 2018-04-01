@@ -44,6 +44,7 @@
             this.TypeRead = new System.Windows.Forms.GroupBox();
             this.TypeReadInt = new System.Windows.Forms.RadioButton();
             this.TypeReadChar = new System.Windows.Forms.RadioButton();
+            this.ButtonKeySettings = new System.Windows.Forms.Button();
             this.TypeSend.SuspendLayout();
             this.TypeRead.SuspendLayout();
             this.SuspendLayout();
@@ -216,12 +217,25 @@
             this.TypeReadChar.UseVisualStyleBackColor = true;
             this.TypeReadChar.CheckedChanged += new System.EventHandler(this.TypeReadChar_CheckedChanged);
             // 
+            // ButtonKeySettings
+            // 
+            this.ButtonKeySettings.Enabled = false;
+            this.ButtonKeySettings.Location = new System.Drawing.Point(106, 80);
+            this.ButtonKeySettings.Name = "ButtonKeySettings";
+            this.ButtonKeySettings.Size = new System.Drawing.Size(75, 23);
+            this.ButtonKeySettings.TabIndex = 8;
+            this.ButtonKeySettings.Text = "Key Settings";
+            this.toolTrip.SetToolTip(this.ButtonKeySettings, "Configure the data sent by keystrokes\r\n");
+            this.ButtonKeySettings.UseVisualStyleBackColor = true;
+            this.ButtonKeySettings.Click += new System.EventHandler(this.ButtonKeySettings_Click);
+            // 
             // MainMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(404, 110);
+            this.Controls.Add(this.ButtonKeySettings);
             this.Controls.Add(this.CaptureModeCheckBox);
             this.Controls.Add(this.TypeRead);
             this.Controls.Add(this.TypeSend);
@@ -263,6 +277,7 @@
         private System.Windows.Forms.RadioButton TypeReadChar;
         private System.Windows.Forms.CheckBox TypeSendNewLine;
         private System.Windows.Forms.CheckBox CaptureModeCheckBox;
+        private System.Windows.Forms.Button ButtonKeySettings;
     }
 }
 

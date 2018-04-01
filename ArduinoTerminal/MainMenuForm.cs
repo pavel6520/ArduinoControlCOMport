@@ -8,6 +8,7 @@ namespace ArduinoTerminal
     public partial class MainMenuForm : Form
     {
         public ComConnectForm ConnectForm;
+        public KeySettingsForm SettingsForm;
         public Thread ReadComPort;
         private int PortCount;
         public bool SendTypeString = true;
@@ -16,7 +17,6 @@ namespace ArduinoTerminal
         public bool ThreadStart = false;
         public bool CaptureMode = false;
         
-
         public int ComNamesUpdate()
         {
             BoxComNames.Items.Clear();
@@ -159,6 +159,20 @@ namespace ArduinoTerminal
         private void CaptureModeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             CaptureMode = CaptureModeCheckBox.Checked;
+            ButtonKeySettings.Enabled = CaptureModeCheckBox.Checked;
+        }
+
+        private void ButtonKeySettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm = new KeySettingsForm();
+            this.Visible = false;
+            SettingsForm.FormClosed += (obj, arg) =>
+            {
+                this.Location = SettingsForm.Location;
+                this.Visible = true;
+            };
+
+            SettingsForm.Show();
         }
     }
 }
