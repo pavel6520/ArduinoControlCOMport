@@ -10,6 +10,7 @@ namespace ArduinoTerminal
         public ComConnectForm ConnectForm;
         public KeySettingsForm SettingsForm;
         public Thread ReadComPort;
+        public Thread CapturedSend;
         private int PortCount;
         public bool SendTypeString = true;
         public bool SendTypeLine = true;
@@ -92,7 +93,7 @@ namespace ArduinoTerminal
             BoxBaudRate.SelectedIndex = 3;
         }
 
-        private void ButtonStartConnect_Click(object sender, EventArgs e)
+        private void ButtonStartConnect_Click(object sender, EventArgs ev)
         {
             Program.ComPort.SetConfCOMport();
             if (!Program.ComPort.OpenCOMport())
@@ -102,17 +103,36 @@ namespace ArduinoTerminal
             else
             {
                 ConnectForm = new ComConnectForm();
-                this.Visible = false;
+                Visible = false;
+                Program.MainForm.ThreadStart = true;
                 ConnectForm.FormClosed += (obj, arg) =>
                 {
                     if (ThreadStart)
                     {
-                        this.Location = ConnectForm.Location;
                         ThreadStart = false;
-                        while (ReadComPort.ThreadState != ThreadState.Stopped) ;
-                        Program.ComPort.CloseCOMport();
+                        /*try
+                        {
+                            ReadComPort.Abort();
+                            ReadComPort.Join();
+                        }
+                        catch (Exception e) { MessageBox.Show(e + ""); }
+                        //while (ReadComPort.ThreadState != ThreadState.Stopped) ;
+
+                        try
+                        {
+                            CapturedSend.Abort();
+                            CapturedSend.Join();
+                        }
+                        catch (Exception e) { MessageBox.Show(e + ""); }
+                        */
+                        try
+                        {
+                            Program.ComPort.CloseCOMport();
+                        }
+                        catch (Exception e) { MessageBox.Show(e + ""); }
                     }
-                    this.Visible = true;
+                    Location = ConnectForm.Location;
+                    Visible = true;
                 };
 
                 ConnectForm.Show();
@@ -159,7 +179,7 @@ namespace ArduinoTerminal
         private void CaptureModeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             CaptureMode = CaptureModeCheckBox.Checked;
-            ButtonKeySettings.Enabled = CaptureModeCheckBox.Checked;
+            //ButtonKeySettings.Enabled = CaptureModeCheckBox.Checked;
         }
 
         private void ButtonKeySettings_Click(object sender, EventArgs e)

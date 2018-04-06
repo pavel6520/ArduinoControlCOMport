@@ -81,6 +81,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.ComConnect_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ComConnectForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ComConnectForm_KeyUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 
