@@ -17,6 +17,7 @@ namespace ArduinoTerminal
         public KeySettingsForm()
         {
             InitializeComponent();
+
         }
 
         private void KeySettingsForm_Load(object sender, EventArgs e)
@@ -26,26 +27,34 @@ namespace ArduinoTerminal
 
         private void KeySettingsForm_KeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
-            if (!TextBoxKeyValSettings.Enabled)
+            try
             {
-                ButtonSave.Enabled = true;
-                ButtonCancel.Enabled = true;
-                TextBoxKeyValSettings.Enabled = true;
-                LabelKeyPressed.Text = "Selected key: " + e.KeyCode;
-                KeyPressed = e.KeyValue;
-                if (Program.FileSettings.KeyExists("Key" + KeyPressed, "countVal") && Program.FileSettings.ReadINI("Key" + KeyPressed, "countVal").Length > 0)
+                e.Handled = true;
+                if (!TextBoxKeyValSettings.Enabled)
                 {
-                    countVal = Convert.ToInt32(Program.FileSettings.ReadINI("Key" + KeyPressed, "countVal"));
-                    for (int i = 0; i < countVal; i++)
+                    ButtonSave.Enabled = true;
+                    ButtonCancel.Enabled = true;
+                    TextBoxKeyValSettings.Enabled = true;
+                    LabelKeyPressed.Text = "Selected key: " + e.KeyCode;
+                    KeyPressed = e.KeyValue;
+                    if (Program.FileSettings.KeyExists("Key" + KeyPressed, "countVal") && Program.FileSettings.ReadINI("Key" + KeyPressed, "countVal").Length > 0)
                     {
-                        TextBoxKeyValSettings.AppendText(Program.FileSettings.ReadINI("Key" + KeyPressed, "Val" + i));
-                        if (countVal - 1 != i)
+                        countVal = Convert.ToInt32(Program.FileSettings.ReadINI("Key" + KeyPressed, "countVal"));
+                        for (int i = 0; i < countVal; i++)
                         {
-                            TextBoxKeyValSettings.AppendText("\n");
+                            TextBoxKeyValSettings.AppendText(Program.FileSettings.ReadINI("Key" + KeyPressed, "Val" + i));
+                            if (countVal - 1 != i)
+                            {
+                                TextBoxKeyValSettings.AppendText("\n");
+                            }
                         }
                     }
+                    TextBoxKeyValSettings.Focus();
                 }
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show(e1 + "");
             }
         }
 
